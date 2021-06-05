@@ -1,23 +1,30 @@
 import logo from './logo.svg';
 import './App.css';
+import Gatete from './Gatete';
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link,
+  useRouteMatch,
+  useParams
+} from "react-router-dom";
 
 function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+        <h1>Gatetes!!</h1>
+      </header> 
+      <Router>
+        <Switch>
+          <Route exact path="/">
+            <Gatete />
+          </Route>
+          <Route path="/id/:id" render={props => <Gatete {...props.match.params} />} />
+        </Switch>
+      </Router>
+      <a href="/">Quiero ver otro gatete!!</a>
     </div>
   );
 }
