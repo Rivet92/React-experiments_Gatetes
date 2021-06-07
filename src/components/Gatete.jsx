@@ -19,13 +19,6 @@ const Gatete = () => {
             window.history.pushState(null, `Gatete - ${context.id ?? id}`, `/id/${context.id ?? id}`)       
     }, [context.id, id])
     
-    const verMasGatetes = (event) => {
-        event.preventDefault()
-        let id = Math.floor(Math.random() * 30)
-        window.history.pushState(null, `Gatete - ${id}`, `/id/${id}`)
-        context.setId(id)
-    }
-
     if (isValidId(id))  {
         return (
             <>
