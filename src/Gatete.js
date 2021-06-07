@@ -4,17 +4,20 @@ import {useAppContext, ContextProvider} from './ContextProvider';
 
 const Gatete = () => { 
     const context = useAppContext()
-    console.log(context.id)
-    if (useParams?.id)
-        context.setId(useParams.id)
-    var img = getGatete(context.id)
+    var {id} = useParams()
+    id = context.id ?? id
+    var img = getGatete(id)
+    console.log(`Img id: ${img.id}`)
     useEffect(() => {
-        if (context.id) {
-            window.history.pushState(null, `Gatete - ${context.id}`, `/id/${context.id}`)
-            console.log(context.id)
+        if (isValidId(id)) {
+            context.setId(img.id)
+            window.history.pushState(null, `Gatete - ${img.id}`, `/id/${img.id}`)
         }
-            
-    }, [context.id])
+    }, [])
+    useEffect(() => {
+        if (isValidId(context.id ?? id))
+            window.history.pushState(null, `Gatete - ${context.id ?? id}`, `/id/${context.id ?? id}`)       
+    }, [context.id, id])
     
     const verMasGatetes = (event) => {
         event.preventDefault()
@@ -23,8 +26,7 @@ const Gatete = () => {
         context.setId(id)
     }
 
-    if (isValidId(context.id))  {
-        context.setId(img.id)
+    if (isValidId(id))  {
         return (
             <div>
                 <a href={img.url}><img src={"/img/" + img.fileName} alt={"Autor: " + img.author} /></a>
