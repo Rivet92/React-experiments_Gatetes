@@ -1,6 +1,7 @@
 import logo from './logo.svg';
 import './App.css';
-import Gatete from './Gatete';
+import Gatete from './components/Gatete';
+import MoarGatetes from './components/MoarGatetes'
 import {
   BrowserRouter as Router,
   Switch,
@@ -19,8 +20,11 @@ function App() {
           <Switch>
             <Route exact path="/">
               <Gatete/>
+              <MoarGatetes/>
             </Route>
-            <Route path="/id/:id" component={Gatete}>
+            <Route path="/id/:id">
+              <Gatete/>
+              <MoarGatetes/>
             </Route>
           </Switch>
         </Router>

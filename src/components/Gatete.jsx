@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import { useParams } from 'react-router-dom';
-import {useAppContext, ContextProvider} from './ContextProvider';
+import {useAppContext, ContextProvider} from '../ContextProvider';
 
 const Gatete = () => { 
     const context = useAppContext()
@@ -28,11 +28,10 @@ const Gatete = () => {
 
     if (isValidId(id))  {
         return (
-            <div>
+            <>
                 <a href={img.url}><img src={"/img/" + img.fileName} alt={"Autor: " + img.author} /></a>
-                <p>Autor: <a href={img.authorUrl}>{img.author}</a></p>
-                <button onClick={verMasGatetes} >Quiero ver otro gatete!!</button>
-            </div>
+                <p>Autor: <a href={img.authorUrl}>{img.author}</a></p>  
+            </>
         );
     }
     else 
@@ -48,7 +47,7 @@ function isValidId(id) {
 }
 
 function getGatete(i) {
-    var images = require('./images.json')
+    var images = require('../images.json')
     var j = (i && i>=0 && i<30)? i:  Math.floor(Math.random()*30)
     var index = Object.keys(images)[j]
     return {id: j,
