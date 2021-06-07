@@ -31,7 +31,7 @@ const Gatete = () => {
             <div>
                 <a href={img.url}><img src={"/img/" + img.fileName} alt={"Autor: " + img.author} /></a>
                 <p>Autor: <a href={img.authorUrl}>{img.author}</a></p>
-                <a href="/" onClick={verMasGatetes} >Quiero ver otro gatete!!</a>
+                <button onClick={verMasGatetes} >Quiero ver otro gatete!!</button>
             </div>
         );
     }
