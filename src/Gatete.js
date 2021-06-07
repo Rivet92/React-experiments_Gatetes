@@ -1,32 +1,45 @@
-import React from 'react';
-class Gatete extends React.Component {
+import React, {useEffect} from 'react';
+import { useParams } from 'react-router-dom';
+import {useAppContext, ContextProvider} from './ContextProvider';
 
-    constructor (props) {
-        super(props);
-        this._id = props.id
-    }
-    get id() {return this._id}
-    set id(val) {this._id = val}
-    render() {
-        var img = getGatete(this.id)
-        if (isValidId(this.id))  {
-            this.id = img.id
-            return (
-                <div>
-                    <a href={img.url}><img src={"/img/" + img.fileName} alt={"Autor: " + img.author} /></a>
-                    <p>Autor: <a href={img.authorUrl}>{img.author}</a></p>
-                </div>
-            );
+const Gatete = () => { 
+    const context = useAppContext()
+    console.log(context.id)
+    if (useParams?.id)
+        context.setId(useParams.id)
+    var img = getGatete(context.id)
+    useEffect(() => {
+        if (context.id) {
+            window.history.pushState(null, `Gatete - ${context.id}`, `/id/${context.id}`)
+            console.log(context.id)
         }
-        else 
-            return (<div><h2>Esa url no es la de un gatete :(</h2></div>);
+            
+    }, [context.id])
+    
+    const verMasGatetes = (event) => {
+        event.preventDefault()
+        let id = Math.floor(Math.random() * 30)
+        window.history.pushState(null, `Gatete - ${id}`, `/id/${id}`)
+        context.setId(id)
     }
-    componentDidMount() {
-        if (this.id)
-            window.history.pushState(null, "Gatete - "+this.id, "/id/"+this.id)
+
+    if (isValidId(context.id))  {
+        context.setId(img.id)
+        return (
+            <div>
+                <a href={img.url}><img src={"/img/" + img.fileName} alt={"Autor: " + img.author} /></a>
+                <p>Autor: <a href={img.authorUrl}>{img.author}</a></p>
+                <a href="/" onClick={verMasGatetes} >Quiero ver otro gatete!!</a>
+            </div>
+        );
     }
+    else 
+        return (<div><h2>Esa url no es la de un gatete :(</h2></div>);
+
 
 }
+
+
 
 function isValidId(id) {
     return !id || (id>=0 && id<30)

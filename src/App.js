@@ -4,28 +4,27 @@ import Gatete from './Gatete';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link,
-  useRouteMatch,
-  useParams
+  Route
 } from "react-router-dom";
+import React, { useContext } from 'react';
+import {ContextProvider, useAppContext} from './ContextProvider';
 
 function App() {
   return (
-    <div className="App">
+    <ContextProvider>
       <header className="App-header">
         <h1>Gatetes!!</h1>
       </header> 
-      <Router>
-        <Switch>
-          <Route exact path="/">
-            <Gatete />
-          </Route>
-          <Route path="/id/:id" render={props => <Gatete {...props.match.params} />} />
-        </Switch>
-      </Router>
-      <a href="/">Quiero ver otro gatete!!</a>
-    </div>
+        <Router>
+          <Switch>
+            <Route exact path="/">
+              <Gatete/>
+            </Route>
+            <Route path="/id/:id" component={Gatete}>
+            </Route>
+          </Switch>
+        </Router>
+    </ContextProvider>
   );
 }
 
